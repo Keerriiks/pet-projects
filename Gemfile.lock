@@ -1,0 +1,17 @@
+GIT
+  remote: https://github.com/dadooda/attr_magic
+  revision: d7a4f1b4d7a5d008f01134311292e6d1f33262aa
+  specs:
+    attr_magic (0.1.2)
+
+GEM
+  specs:
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  attr_magic!
+
+BUNDLED WITH
+   2.4.22
