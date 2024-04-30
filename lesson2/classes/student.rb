@@ -1,13 +1,11 @@
 require_relative "base_tool"
 
+
 class Student < BaseTool
   AttrMagic.load(self)
 
   # @return [String]
   attr_accessor :email
-
-  # @return [File]
-  attr_accessor :file
 
   attr_writer :faculty
 

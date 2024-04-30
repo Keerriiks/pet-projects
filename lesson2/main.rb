@@ -15,3 +15,6 @@ student_card3 = Student.new(first_name: "Kirill", last_name: "Vikulin", \
 puts student_card1
 # puts student_card2
 puts student_card3
+
+
+student_card_in_file = Student.new(file_name: "../students_data/students").student_card
