@@ -4,3 +4,4 @@ Taylor  | Carl    | J.      |  carl.taylor@live.com     |   Maths
 Smith   | Bob     |         |  bob.smith@gmail.com      |               |
 
 Unker   | Daniel  |         |                           |   Technology
+Vikulin | Kirill |   | 2rbi@gmai.com | |
