@@ -3,7 +3,15 @@
 #$LOAD_PATH << File.expand_path("college", __dir__)
 
 # Нам нужен класс факультет.
+
+
+#require "kaka_makaka"
+#KakaMakaka.new
+# "kaka_makaka" …
+
+
 #require "faculty"
+#require_relative "college/faculty"
 
 #require "attr_magic"
 
