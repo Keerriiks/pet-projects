@@ -53,9 +53,7 @@ class StudentCardsMaker < BaseTool
 
   # @return [Hash]
   def sorted_students
-    sorting_order.each do |ord|
-      students.sort_by { |s| s[ord] }
-    end
+    students.sort_by { |student| sorting_order.map { |key| student[key] } }
   end
 
   # @return [Array]
