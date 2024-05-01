@@ -1,4 +1,6 @@
+
+require "bundler/setup"
+Bundler.require
+
 class BaseTool
-  require 'bundler/setup'
-  Bundler.require
 end
