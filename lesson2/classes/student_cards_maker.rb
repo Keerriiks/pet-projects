@@ -17,24 +17,19 @@ class StudentCardsMaker < BaseTool
   # @return [String]
   def student_cards
     cards = ""
-    sorted_students.each do |place, student|  
-      puts "\e[1;35m●●●\e[0m student #{student.inspect}"
-      cards << Student.new(student).student_card
-    end
+    sorted_students.each { |student| cards << student.student_card }
     cards
   end
 
   #--------------------------------------- Lazy-атрибуты
   public
   
-  # @return [Hash]
+  # @return [Array]
   def students
-    students_data = {}
-    place = 0
+    students_data = []
     read_student_data_from_file.each do |line|
-      place += 1
       student_data = line
-      students_data[place] = { 
+      students_data << { 
         "email": student_data[3],
         "faculty": student_data[4],
         "first_name": student_data[1],
@@ -42,7 +37,12 @@ class StudentCardsMaker < BaseTool
         "middle_name": student_data[2],
       } unless student_data[0].nil? || student_data[0].empty? || student_data[1].nil? || student_data[1].empty? || student_data[3].nil? || student_data[3].empty?
     end
-    students_data
+
+    _students = []
+    students_data.each do |student|  
+      _students << Student.new(student)
+    end
+    _students
   end
 
   private
@@ -55,7 +55,7 @@ class StudentCardsMaker < BaseTool
 
   # @return [Hash]
   def sorted_students
-    students.sort_by { |place, student| sorting_order.map { |key| student[:key] } }.to_h
+    students.sort_by { |student|  sorting_order.map { |key| student.public_send(key) }  }
   end
 
   # @return [Array]
