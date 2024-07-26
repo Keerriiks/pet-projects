@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative "classes/student"
 require_relative "classes/student_cards_maker"
 
