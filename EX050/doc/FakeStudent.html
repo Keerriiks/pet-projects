@@ -300,12 +300,12 @@
       <pre class="lines">
 
 
-9
-10
-11</pre>
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_attrs'>attrs</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_attrs'>attrs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_public_send'>public_send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_k'>k</span><span class='embexpr_end'>}</span><span class='tstring_content'>=</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -361,15 +361,15 @@
       <pre class="lines">
 
 
-15
-16
-17</pre>
+7
+8
+9</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 7</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_age'>age</span>
-  <span class='ivar'>@age</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@age</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ivar'>@age</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='lbracket'>[</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\d+$</span><span class='regexp_end'>/</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='ivar'>@age</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -417,17 +417,15 @@
       <pre class="lines">
 
 
-28
-29
-30
-31</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_last_name'>last_name</span>
-  <span class='kw'>return</span> <span class='ivar'>@last_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@last_name</span>
-  <span class='ivar'>@last_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DEFAULT_LAST_NAMES-constant" title="FakeStudent::DEFAULT_LAST_NAMES (constant)">DEFAULT_LAST_NAMES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sample'>sample</span>
+  <span class='ivar'>@last_name</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="#DEFAULT_LAST_NAMES-constant" title="FakeStudent::DEFAULT_LAST_NAMES (constant)">DEFAULT_LAST_NAMES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sample'>sample</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -480,17 +478,15 @@
       <pre class="lines">
 
 
-21
-22
-23
-24</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_first_name'>first_name</span>
-  <span class='kw'>return</span> <span class='ivar'>@first_name</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@first_name</span>
-  <span class='ivar'>@first_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DEFAULT_FIRST_NAMES-constant" title="FakeStudent::DEFAULT_FIRST_NAMES (constant)">DEFAULT_FIRST_NAMES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sample'>sample</span>
+  <span class='ivar'>@first_name</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="#DEFAULT_FIRST_NAMES-constant" title="FakeStudent::DEFAULT_FIRST_NAMES (constant)">DEFAULT_FIRST_NAMES</a></span></span><span class='period'>.</span><span class='id identifier rubyid_sample'>sample</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -536,17 +532,15 @@
       <pre class="lines">
 
 
-35
-36
-37
-38</pre>
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/fake_student.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_personal_info'>personal_info</span>
-  <span class='kw'>return</span> <span class='ivar'>@personal_info</span> <span class='kw'>if</span> <span class='kw'>defined?</span> <span class='ivar'>@personal_info</span>
-  <span class='ivar'>@personal_info</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_first_name'>first_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_last_name'>last_name</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_age'>age</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_age'>age</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@personal_info</span> <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_first_name'>first_name</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_last_name'>last_name</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_age'>age</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_age'>age</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -558,7 +552,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Aug 17 00:51:45 2024 by
+  Generated on Sun Aug 18 10:21:23 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.2).
 </div>
