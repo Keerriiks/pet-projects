@@ -1,25 +1,35 @@
 module Nsp
 
   # @return [nil]
-  def nsp(args={})
+  def nsp(meth=nil, args=[])
+    #self_help if meth.nil? && args.empty?
 
-    # ...
+    puts cognition_methods.inspect
 
-    help
   end
 
   # @return [nil]
-  def nsp!(args={})
+  def nsp!(meth, args=[])
 
     # ...
 
-    help
+    nsp(meth, args)
   end
 
   private
 
+  # @return [Array]
+  def cognition_methods
+    self.methods.select { |m| m.to_s =~ /methods$/ }
+  end
+
   # @return [String]
-  def help
+  def trace_of_method(value)
+
+  end
+
+  # @return [String]
+  def self_help
     puts "\033[1;33;40mUSAGE: <obj>.nsp(<meth>, [...args])\033[0m
 
 \033[1;33;40mEXAMPLES:\033[0m
