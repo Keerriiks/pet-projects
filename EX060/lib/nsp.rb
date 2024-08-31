@@ -4,8 +4,7 @@ module Nsp
   def nsp(meth=nil, args=[])
     #self_help if meth.nil? && args.empty?
 
-    puts cognition_methods.inspect
-
+    puts info
   end
 
   # @return [nil]
@@ -24,8 +23,22 @@ module Nsp
   end
 
   # @return [String]
-  def trace_of_method(value)
+  def info
+    index = 1
+    str = ""
+    object_methods.each do |key, value|
+      str += "\033[0;33;40m#{index}. #{key}\033\n"
+      str += "\033[0;32;40m#{value}\033\n\n"
+      index += 1
+    end
+    str
+  end
 
+  # @return [Hash]
+  def object_methods(value=nil)
+    hash = {}
+    cognition_methods.map { |m| hash.merge!({ m => self.public_send(m).sort })}
+    hash
   end
 
   # @return [String]
