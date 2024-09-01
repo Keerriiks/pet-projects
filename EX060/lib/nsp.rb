@@ -1,18 +1,17 @@
 module Nsp
 
   # @return [nil]
-  def nsp(meth=nil, args=[])
-    #self_help if meth.nil? && args.empty?
+  def nsp(*args)
+    return self_help if args.size == 0
 
-    puts info
+    puts methods_info(optional_object_methods(args[0], args[1]))
   end
 
   # @return [nil]
-  def nsp!(meth, args=[])
+  def nsp!(*args)
+    return self_help if args.size == 0
 
-    # ...
-
-    nsp(meth, args)
+    puts methods_info(optional_object_methods(args[0], args[1], false))
   end
 
   private
@@ -23,22 +22,34 @@ module Nsp
   end
 
   # @return [String]
-  def info
+  def methods_info(methods)
     index = 1
     str = ""
-    object_methods.each do |key, value|
+    methods.each do |key, value|
       str += "\033[0;33;40m#{index}. #{key}\033\n"
-      str += "\033[0;32;40m#{value}\033\n\n"
+      str += "\033[0;32;40m#{value}\033\033[0m\n\n"
       index += 1
     end
+    str[-1] = ""
     str
   end
 
   # @return [Hash]
-  def object_methods(value=nil)
+  def object_methods(include_super)
     hash = {}
-    cognition_methods.map { |m| hash.merge!({ m => self.public_send(m).sort })}
+    cognition_methods.map { |m| hash.merge!({ m => self.public_send(m, include_super).sort }) }
     hash
+  end
+
+  # @return [Hash]
+  def optional_object_methods(meth, args, include_super = true)
+    if meth == :grep
+      hash = {}
+      object_methods(include_super).each do |key, value|
+        hash[key] = !args.nil? ? value.select { |m| args.match?(m.to_s) } : "\033[0;31;40m#<ArgumentError: wrong number of arguments (given 1, expected 2)>\033"
+      end
+      hash
+    end
   end
 
   # @return [String]
