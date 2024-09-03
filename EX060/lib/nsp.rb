@@ -1,13 +1,12 @@
 module Nsp
-
   # @return [nil]
-  def nsp(*args)
-    distributor(args, true)
+  def nsp(*args, &block)
+    puts distributor(args, true, &block)
   end
 
   # @return [nil]
-  def nsp!(*args)
-    distributor(args, false)
+  def nsp!(*args, &block)
+    puts distributor(args, false, &block)
   end
 
   private
@@ -18,11 +17,9 @@ module Nsp
   end
 
   # @return [nil]
-  def distributor(args, include_super)
-    return puts self_help if args.size == 0
-    return puts "\033[0;31;40m#<ArgumentError: wrong number of arguments (given #{args.size}, expected 2)>\033[0m" if args.size > 2
-
-    puts methods_info(optional_object_methods(args[1], include_super)) if args[0] == :grep
+  def distributor(args, include_super, &block)
+    return self_help if args.size == 0
+    methods_info(optional_object_methods(args, include_super, &block))
   end
 
   # @return [String]
@@ -46,10 +43,19 @@ module Nsp
   end
 
   # @return [Hash]
-  def optional_object_methods(args, include_super)
+  def optional_object_methods(args, include_super, &block)
       hash = {}
+      sample = block_given? ? // : args[1]
       object_methods(include_super).each do |key, value|
-        hash[key] = !args.nil? ? value.select { |m| args.match?(m.to_s) } : "\033[0;31;40m#<ArgumentError: wrong number of arguments (given 1, expected 2)>\033[0m"
+          hash[key] = if sample.nil? && !block_given?
+            "\033[0;31;40m#<ArgumentError: wrong number of arguments (given 1, expected 2)>\033[0m"
+          else
+            if block_given?
+              value.select { |m| sample.match?(m.to_s) }.map(&block)
+            else
+              value.select { |m| sample.match?(m.to_s) }
+            end
+          end
       end
       hash
   end
