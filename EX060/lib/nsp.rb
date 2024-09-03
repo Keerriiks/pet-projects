@@ -2,13 +2,11 @@ module Nsp
 
   # @return [nil]
   def nsp(*args)
-    return help_with_arguments(args)
     distributor(args, true)
   end
 
   # @return [nil]
   def nsp!(*args)
-    return help_with_arguments(args)
     distributor(args, false)
   end
 
@@ -21,14 +19,10 @@ module Nsp
 
   # @return [nil]
   def distributor(args, include_super)
-    return help_with_arguments(args)
-    puts methods_info(optional_object_methods(args[1], include_super)) if args[0] == :grep
-  end
+    return puts self_help if args.size == 0
+    return puts "\033[0;31;40m#<ArgumentError: wrong number of arguments (given #{args.size}, expected 2)>\033[0m" if args.size > 2
 
-  # @return [nil]
-  def help_with_arguments(args)
-    puts self_help if args.size == 0
-    puts "\033[0;31;40m#<ArgumentError: wrong number of arguments (given #{args.size}, expected 2)>\033[0m" if args.size > 2
+    puts methods_info(optional_object_methods(args[1], include_super)) if args[0] == :grep
   end
 
   # @return [String]
