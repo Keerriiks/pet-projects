@@ -42,6 +42,7 @@ module Nsp
     hash
   end
 
+  # KV: TODO: по-хорошему надо разгрузить код — уменьшить условий, разбить на методы.
   # @return [Hash]
   def optional_object_methods(args, include_super, &block)
       hash = {}
