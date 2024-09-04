@@ -1,27 +1,84 @@
 module Nsp
+
   # @return [nil]
   def nsp(*args, &block)
+    def grep(*args)
+      args = [__method__, args[0]]
+      puts distributor(args, true)
+    end
+
+    def count(*args)
+      args = [__method__, args[0]]
+      puts distributor(args, true)
+    end
+
     puts distributor(args, true, &block)
   end
 
   # @return [nil]
   def nsp!(*args, &block)
+    def grep(*args)
+      args = [__method__, args[0]]
+      puts distributor(args, false)
+    end
+
+    def count(*args)
+      args = [__method__, args[0]]
+      puts distributor(args, false)
+    end
+
     puts distributor(args, false, &block)
   end
 
+  # # KV: NOTE: Тяжёлая эротика не для слабонервных №1.
+  # # return [nil]
+  # def nsp
+  #   def grep(*args)
+  #     args = [__method__, args[0]]
+  #     puts distributor(args, true)
+  #   end
+
+  #   def count(*args)
+  #     args = [__method__, args[0]]
+  #     puts distributor(args, true)
+  #   end
+
+  #   puts self_help
+  # end
+
+  # # KV: NOTE: Тяжёлая эротика не для слабонервных №2.
+  # # return [nil]
+  # def nsp!
+  #   puts self_help
+  #   def grep(*args)
+  #     args = [__method__, args[0]]
+  #     puts distributor(args, false)
+  #   end
+
+  #   def count(*args)
+  #     args = [__method__, args[0]]
+  #     puts distributor(args, false)
+  #   end
+
+  #   puts self_help
+  # end
+
   private
 
+  # Методы познания.
   # @return [Array]
   def cognition_methods
     self.methods.select { |m| m.to_s =~ /methods$/ }
   end
 
-  # @return [nil]
+  # Распределитель.
+  # @return [String]
   def distributor(args, include_super, &block)
     return self_help if args.size == 0
     methods_info(optional_object_methods(args, include_super, &block))
   end
 
+  # Информация о методах.
   # @return [String]
   def methods_info(methods)
     index = 1
@@ -35,6 +92,7 @@ module Nsp
     str
   end
 
+  # Все методы объекта-получателя.
   # @return [Hash]
   def object_methods(include_super)
     hash = {}
@@ -42,7 +100,9 @@ module Nsp
     hash
   end
 
-  # KV: TODO: по-хорошему надо разгрузить код — уменьшить условий, разбить на методы.
+  # KV: TODO: По-хорошему надо разгрузить код — уменьшить условий, разбить на методы.
+  # KV: TODO: Есть интерес стукнуться об это головой при тестировании.
+  # Методы объекта-получателя, отобранные по шаблону.
   # @return [Hash]
   def optional_object_methods(args, include_super, &block)
       hash = {}
@@ -52,7 +112,7 @@ module Nsp
             "\033[0;31;40m#<ArgumentError: wrong number of arguments (given 1, expected 2)>\033[0m"
           else
             if block_given?
-              value.select { |m| sample.match?(m.to_s) }.map(&block)
+              value.select { |m| sample.match?(m.to_s) }.public_send("#{args[0]}", &block)
             else
               value.select { |m| sample.match?(m.to_s) }
             end
@@ -61,6 +121,7 @@ module Nsp
       hash
   end
 
+  # Примеры использования.
   # @return [String]
   def self_help
   "\033[1;33;40mUSAGE: <obj>.nsp(<meth>, [...args])\033[0m
