@@ -2,66 +2,55 @@ module Nsp
 
   # @return [nil]
   def nsp(*args, &block)
+    $is_end = false
+    # @return [nil]
     def grep(*args)
+      $is_end = true
       args = [__method__, args[0]]
       puts distributor(args, true)
     end
 
+    # @return [nil]
     def count(*args)
+      $is_end = true
       args = [__method__, args[0]]
       puts distributor(args, true)
     end
 
-    puts distributor(args, true, &block)
+    puts distributor(args, true, &block) unless $is_end
   end
 
   # @return [nil]
   def nsp!(*args, &block)
+    $is_end = false
+    # @return [nil]
     def grep(*args)
+      $is_end = true
       args = [__method__, args[0]]
       puts distributor(args, false)
     end
 
+    # @return [nil]
     def count(*args)
+      $is_end = true
       args = [__method__, args[0]]
       puts distributor(args, false)
     end
 
-    puts distributor(args, false, &block)
+    # Распределитель.
+    # @return [String]
+    def distributor(args, include_super, &block)
+      return self_help if args.size == 0
+
+      if args[0] != :count
+        methods_info(optional_object_methods(args, include_super, &block))
+      else
+        methods_count(optional_object_methods(args, include_super))
+      end
+    end
+
+    puts distributor(args, false, &block) unless $is_end
   end
-
-  # # KV: NOTE: Тяжёлая эротика не для слабонервных №1.
-  # # return [nil]
-  # def nsp
-  #   def grep(*args)
-  #     args = [__method__, args[0]]
-  #     puts distributor(args, true)
-  #   end
-
-  #   def count(*args)
-  #     args = [__method__, args[0]]
-  #     puts distributor(args, true)
-  #   end
-
-  #   puts self_help
-  # end
-
-  # # KV: NOTE: Тяжёлая эротика не для слабонервных №2.
-  # # return [nil]
-  # def nsp!
-  #   puts self_help
-  #   def grep(*args)
-  #     args = [__method__, args[0]]
-  #     puts distributor(args, false)
-  #   end
-
-  #   def count(*args)
-  #     args = [__method__, args[0]]
-  #     puts distributor(args, false)
-  #   end
-
-  #   puts self_help
-  # end
 
   private
 
@@ -71,12 +60,17 @@ module Nsp
     self.methods.select { |m| m.to_s =~ /methods$/ }
   end
 
-  # Распределитель.
-  # @return [String]
-  def distributor(args, include_super, &block)
-    return self_help if args.size == 0
-    methods_info(optional_object_methods(args, include_super, &block))
-  end
+  # # Распределитель.
+  # # @return [String]
+  # def distributor(args, include_super, &block)
+  #   return self_help if args.size == 0
+
+  #   if args[0] != :count
+  #     methods_info(optional_object_methods(args, include_super, &block))
+  #   else
+  #     methods_count(optional_object_methods(args, include_super))
+  #   end
+  # end
 
   # Информация о методах.
   # @return [String]
@@ -92,16 +86,20 @@ module Nsp
     str
   end
 
+  # Кол-во найденных методов.
+  # return [String]
+  def methods_count(count)
+    "\033[0;33;40mНайдено:\033\n\033[0;32;40m#{count}\033[0m\n"
+  end
+
   # Все методы объекта-получателя.
   # @return [Hash]
   def object_methods(include_super)
     hash = {}
-    cognition_methods.map { |m| hash.merge!({ m => self.public_send(m, include_super).sort }) }
+    cognition_methods.map { |m| hash.merge!({ m => self.public_send(mr).sort }) }
     hash
   end
 
-  # KV: TODO: По-хорошему надо разгрузить код — уменьшить условий, разбить на методы.
-  # KV: TODO: Есть интерес стукнуться об это головой при тестировании.
   # Методы объекта-получателя, отобранные по шаблону.
   # @return [Hash]
   def optional_object_methods(args, include_super, &block)
@@ -118,6 +116,7 @@ module Nsp
             end
           end
       end
+      return hash.values.map { |val| val.length }.sum if args[0] == :count
       hash
   end
 
