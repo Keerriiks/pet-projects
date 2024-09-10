@@ -60,17 +60,17 @@ module Nsp
     self.methods.select { |m| m.to_s =~ /methods$/ }
   end
 
-  # # Распределитель.
-  # # @return [String]
-  # def distributor(args, include_super, &block)
-  #   return self_help if args.size == 0
+  # Распределитель.
+  # @return [String]
+  def distributor(args, include_super, &block)
+    return self_help if args.size == 0
 
-  #   if args[0] != :count
-  #     methods_info(optional_object_methods(args, include_super, &block))
-  #   else
-  #     methods_count(optional_object_methods(args, include_super))
-  #   end
-  # end
+    if args[0] != :count
+      methods_info(optional_object_methods(args, include_super, &block))
+    else
+      methods_count(optional_object_methods(args, include_super))
+    end
+  end
 
   # Информация о методах.
   # @return [String]
@@ -96,7 +96,7 @@ module Nsp
   # @return [Hash]
   def object_methods(include_super)
     hash = {}
-    cognition_methods.map { |m| hash.merge!({ m => self.public_send(mr).sort }) }
+    cognition_methods.map { |m| hash.merge!({ m => self.public_send(m).sort }) }
     hash
   end
 

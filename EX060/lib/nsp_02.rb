@@ -1,26 +1,17 @@
-module NspEntrance
-
-  def nsp
-    Nsp
-  end
-
-end
-
-
-class Nsp
-  class << self
-    def grep
-      puts "СРАБОТАЛ GREP"
-    end
-  end
-end
-
 =begin
 
-nsp это класс
+nsp # => подсказка
 
-nsp.grep //
+nsp :grep, // # => всё норм
+nsp :grep     # => ожидалось 2 аргумента
 
-nsp :grep, //
+nsp(:map) { |s| s.to_s.reverse } # можно передать блок
+
+nsp.grep //  # => всё норм
+
 
 =end
+
+
+
+
