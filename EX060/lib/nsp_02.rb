@@ -1,17 +1,17 @@
-=begin
+module Nsp
+  def nsp(method=nil, *args, &block)
+    if method == :grep
+      puts "nsp :grep"
+      return nil
+    end
+    self
+  end
 
-nsp # => подсказка
+  def grep(*args)
+    puts "nsp.grep"
+  end
+end
 
-nsp :grep, // # => всё норм
-nsp :grep     # => ожидалось 2 аргумента
-
-nsp(:map) { |s| s.to_s.reverse } # можно передать блок
-
-nsp.grep //  # => всё норм
-
-
-=end
-
-
-
-
+class Object
+  include Nsp
+end
